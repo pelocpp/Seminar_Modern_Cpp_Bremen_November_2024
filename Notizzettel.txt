@@ -280,3 +280,164 @@ Strategien:
 
 Return Value Optimierung
 
+// ===================================
+...
+Detected memory leaks!
+Dumping objects ->
+C:\Peter_Loos\GeneralSnippets\UniquePtr\UniquePtr.cpp(265) : {160} normal block at 0x000001CCF22A45C0, 40 bytes long.
+ Data: <                > CD CD CD CD CD CD CD CD CD CD CD CD CD CD CD CD 
+Object dump complete.
+Das Programm "[11020] Cpp_Modern_Bremen.exe" wurde mit Code 0 (0x0) beendet.
+
+
+HEAP:
+
+ CD CD CD CD CD CD CD CD CD CD CD CD CD CD CD CD 
+
+STACK:
+
+ CC CC CC CC CC .....
+
+ Scalar vs. Array delete / new:
+
+ Immer vom selben ausgehen.
+
+ Was passiert, wenn wir uns an diese Regel nicht halten?
+
+ UB:  Undefined Behaviour
+
+ Semantik Beschreibung.
+
+
+ Memory Leaks:
+
+ https://github.com/pelocpp/cpp_modern/blob/master/GeneralSnippets/MemoryLeaks/MemoryLeaksDetection.md
+
+ Nur Visual C++.
+
+ // Frage:  
+
+ Habe eine Klasse, habe ein Objekt:
+
+ Es fehlen mir gewisse Information, 
+ die an anderer Stelle (Erzeugung) vorhanden waren.
+
+ Lösung:
+
+ Policy based Design.
+
+ https://github.com/pelocpp/cpp_design_patterns/tree/master/Patterns/PolicyBasedDesign/Resources
+
+ // =======================================================================
+
+ Unique_Ptr:
+
+ Shared_Ptr:  PROBLEM:
+
+       Dieser funktioniert nicht IMMER !!!!!!!!!!!!!!
+
+       Was ist das Problem ???
+
+
+
+
+int* ptr = null;
+
+ Shared_Ptr<int> tmp;
+
+ // empty
+
+ ===========
+
+Shared_Ptr<int> sp;    // nicht empty ......... make_shared // new
+
+ // func (Shared_Ptr<int> sp)
+ {
+     
+ }
+
+
+ // =======================================================
+
+ 
+ // =======================================================================
+
+ Unique_Ptr:
+ Shared_Ptr:
+
+ Ich starte neu mit der Thematik "Smart Pointer" !
+
+ ===> (PL): Go-for  Unique_Ptr: Einfacher, schneller (no Mutex),
+            NUR EIN Owner
+
+            Nachteil: EIN Owner.
+ 
+ Wird eine Anwendung komplexer:
+
+  ===> (PL): Go-for  Shared_Ptr: langsamer (no Mutex),
+            Mehrere Besitzer. 
+
+            Nachteil: Funktioniert nicht immer !!!!!!!!!!!!!!!!!!!
+
+            Gibt den Speicher nicht frei !!!!!!!!!!!!!!!
+ 
+A) std::weak_ptr
+
+B) Problem des shared_ptr's
+
+C) Lösung.
+
+// ================================================================
+
+Wo habe ich Zyklen ???
+
+Observer - Pattern:
+
+Quelle / Target: Objekt, das seinen Zustand ändert.
+
+   Für diese Änderungen interessieren sich Clients.
+
+Clients:
+
+   Diese interessieren sich für Änderungen an der Quelle.
+
+   Dazu melden sich Clients an der Quelle an (und wieder ab)
+
+
+Detail:
+
+Quelle und Clients:  std::shared_ptr
+
+    Habe eine Ownership // irgendjemand in der Anwendung muss
+                           deren Lebensdauer entscheiden.
+
+Beobachtens / Observer:
+
+a) Eine Quelle KENNT die Clients, die es bei Zustandsänderung informiert
+   (informiert: Aufruf einer Methode am Client (s)).
+
+   Wie: Shared_Ptr oder Weak_Ptr ???
+
+   Anwort: Eine Quelle sollte NICHT zum Besitzer eines Clients werden !!!!
+
+            Go - for - Weak_Ptr
+
+    Konsequenz: Ein Ereignis tritt ein:
+
+       for - all Clients // for - all Weak-Ptrs:   lock()
+
+       lock() ==> empty : Kann sein.
+
+       Gehe zum nächsten WeakPtr in der Liste und ignoriere den empty.
+
+
+
+FAZIT:
+
+a) std::shared_ptr: Zentralen Objekte
+
+b) Viele Verwender eines "Zentralen Objekte // std::shared_ptr"
+
+   sollten NICHT zum Besitzer (Owner) werden.
+
+   Wenn doch: Referenz Count geht nach oben.

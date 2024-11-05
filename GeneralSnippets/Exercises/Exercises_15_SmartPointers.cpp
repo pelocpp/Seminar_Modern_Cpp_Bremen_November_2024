@@ -183,7 +183,10 @@ namespace Exercises_SmartPointers {
             {
                 // Now we can safely ask whether *m_ptr has been
                 // deallocated or not.
-                if (std::shared_ptr<int> sp; (sp = m_ptr.lock()) != nullptr)
+
+                std::shared_ptr<int> sp = m_ptr.lock();
+
+                if (sp != nullptr)
                 {
                     return *sp;
                 }
@@ -224,7 +227,7 @@ void test_exercises_smartpointer()
 {
     using namespace Exercises_SmartPointers;
     Exercise_01::testExercise_01();
-    // Exercise_02::testExercise_02();   // crashes when executed
+    //Exercise_02::testExercise_02();   // crashes when executed
     Exercise_03::testExercise_03();
 }
 
