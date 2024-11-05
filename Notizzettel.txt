@@ -1,0 +1,282 @@
+// =======================================
+
+Moin
+
+Modern C++
+
+Peter Loos
+
+// =======================================
+
+Was sind meine Erwartungen
+== Muss ab nächster Woche Modern C++ programmieren
+== Will C++ Quellcode nur lesen / verstehen können
+== Was muss DRIN sein 
+== Multithreading: Ja oder Nein.
+== Will einen Überblick erhalten ?
+
+C++ Qt
+MT: Yes
+Lambda
+Smart-Pointer
+Kenntnisse: C# (Java) / Vorsicht: Querbezüge.
+Variadische Templates // 
+Memory Leak Detection
+
+// =======================================
+
+  Übergabe eine Adresse:
+
+  Pointer // Referenz:
+  ====================
+
+Bemerkung: C ist ein C++ ECHT entalten.  (99%).
+
+   Manches hat man in C++ verbessert  ==> NICHT: Meinen C-Stil setze ich in C++ fort.
+
+   & - Operator: Adresse - von 
+
+   * - Operator: Weise Wert (rechte Seite) indirekt zu.
+
+
+=====================================================
+
+C++:   Performanz !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+Kritik:   "Da ist eine Kopie"
+
+Credo:  Kopien auf ALLE FÄLLE vermeiden !!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+C# / Java / Python:
+
+Point p;   // Zeiger // Referenz !!!!!!!!!  
+
+           // class    // struct: Ist in C# ein Objekt ALS WERT / am Stack.
+
+Point p = new Point ();    // jetzt habe ich hier ein Objekt
+
+C++:
+
+Point p;   // Wert ( Value ) // Ich habe das Objekt
+
+Einstufung:  // Einordnung:
+
+C# / Java / Python:     Referenz-basiert
+
+C++:                    a) Value / Wert-basiert
+                        b) Referenz-basiert
+
+Eine Referenz - Variable enthält eine ADRESSE wie eine Zeigervariable !!!
+
+C++ - Wording: Eine Referenz ist ein ALIAS-Name
+               einer bekannten, benannten Variablen.
+
+// ======================================================
+
+Temporäre Objekte kann man nicht via Referenz ansprechen:
+
+Als KOPIE ginge es.
+
+NEUES KONZEPT: Ab C++ 11 geht es !!!!!!!!!!!
+
+Wie ???
+
+Mit einem neuen Referenz-Typ :)   
+
+
+std::string &
+
+std::string &&
+
+// =======================================
+
+C:
+
+ x = y;
+
+ A) Bei einer Wertzuweisung interessiere ich mich bei
+
+    x für die ADRESSE ==> LValue   // Left
+
+B) Bei einer Wertzuweisung interessiere ich mich bei
+
+    y für den Wert von y  ==> RValue  // Right
+
+
+// RValue: Whyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy ????
+
+Move - Semantik:
+
+================================================
+
+Beobachtung:  Kritik:  Überflüssige KOPIE
+
+...: ...  700   // Anon. Objekt am Stack // wird freigegeben
+...: ... 4000   // std::vector
+
+
+Ab C++ 11: Move - Semantik.
+
+...: ...  240   // Anon. Objekt am Stack //
+
+...: .. B0
+
+
+Rule - of - Three:
+
+https://github.com/pelocpp/cpp_introduction/blob/master/Cpp_Introduction/Markdown/RuleOfThree.md
+
+==========
+
+Links von ".print" müssen sich
+in einer Klasse/Struktur/Union befinden
+
+
+Most vexing parse - Wikipedia
+
+
+
+// ===================================================
+
+Übergabe von Funktionen an andere Funktionen:
+
+a) C-Funktionen
+
+b) Aufrufbares Objekt  // Callable Object
+
+   Überladen von Operatoren:  operator ()
+
+   Wozu: Man möchte manchmal "Tätigkeiten" (Funktionen)
+         an andere Funktionen weiterreichen.
+
+         Frage: Welchen Namen gebe ich dieser Funktion ???
+
+         C++: Einfache Antwort: KEINEN.  operator ()
+
+
+
+Lokale Funktionsdefinitionen sind unzulässig
+
+Lokale Klassen sind möglich 
+
+Bemerkung:
+
+Was ist eine Lambda-Funktion ???
+
+A) Es ist KEINE FUNKTION !!!!!!!!!!!
+
+Es ist ein CALLABLE OBJECT.  ==> Ein Objekt
+
+=========================================================
+
+Klasse std::vector
+
+===> Wo sind die Daten: Abgelegt:  Am Heap   ( Runtime )
+
+=========================================================
+
+Programmiersprachen: Grammatik / Syntax / Lexikon
+
+Lexikon ist erweiterbar
+
+Syntaxerweiterung:
+
+Wie: wert operator ""  _suffix  (params);
+
+UDL  ===>   user defined literal
+
+
+123
+
+123.5464
+
+234.34f
+
+123_km
+
+20_kg    ===> 20
+
+20_euros
+
+0xFF0000_color   ==> class Color (  r, g, b )
+
+"05.11.2024"_date
+
+"technologische_beschreibung"_namen;  ==> ge-parsed
+
+===================================================
+
+Übungsteil:
+
+Move-Semantik:
+
+===================================================
+
+
+https://stackoverflow.com/questions/71440372/lifetime-of-a-temporary-object-when-passed-as-an-argument-to-stdmove
+
+===================================================
+
+Exception Safety:
+------------------
+
+
+
+===================================================
+
+Smart Pointer:
+==============
+
+Dynamische Speicherverwaltung: 
+
+Was ist das Problem von 'new' ???
+
+delete wird vergessen 
+
+"Death March"
+
+Idee:  
+
+a) Klassen / Objekte
+
+b) Konstruktoren / Destruktoren
+
+c) Wann wird ein Destruktor aufgerufen ???
+
+   Wenn ich den Scope verlasse  
+      ==> Garantierter / Deterministischer Aufruf
+
+   {
+       Person dagobert;
+
+       ....
+
+
+   }   // Destruktor
+
+d) Zeiger, die von new zurückgeliefert werden:
+
+   ===> Obhut: Hüllenklasse.
+
+   ===> Konstruktor:  new
+   ===> Destruktor:   delete
+
+i) auto_ptr : Deprecated.
+
+ii)
+
+   std::unique_ptr
+   std::shared_ptr, std::weak_ptr
+
+
+Strategien:
+
+   std::unique_ptr-Objekt kann zu EINEM Zeitpunkt
+   nur / genau EINEN Besitzer haben.
+
+   std::shared_ptr-Objekt kann zu EINEM Zeitpunkt
+   MEHRERE Besitzer haben.
+
+
+Return Value Optimierung
+
