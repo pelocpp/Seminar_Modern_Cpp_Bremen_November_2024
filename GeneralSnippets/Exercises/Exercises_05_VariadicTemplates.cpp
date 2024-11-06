@@ -18,7 +18,31 @@ namespace Exercises_VariadicTemplates {
 
         template<typename T, typename ... TRest>
         bool andAll(T cond, TRest ... conds) {
+
+            // Short Circuit Evaluation
+            // Gut / Performant
+            // Nebeneffekten vorsichtig sein !!!
+            // return cond && andAll(conds ++);
+
             return cond && andAll(conds...);
+
+       //     return andAll(conds...) && cond;
+        }
+
+
+
+
+
+        template<typename ... TArgs>
+        bool andAllEx(TArgs ... args) {
+            
+            bool result = true;
+
+            for (auto elem : { args ... }) {
+                result = result && elem;
+            }
+
+            return result;
         }
 
         // or
@@ -40,7 +64,9 @@ namespace Exercises_VariadicTemplates {
             result = andAll(true, (1 > 2), true);
             std::cout << std::boolalpha << result << std::endl;
 
-            result = andAll(true, true, true, true, true, true, true, true, true, true);
+      //      std::make_shared <float / double / ..>
+
+            result = andAll(true, true, false, true, true, true, true, true, true, true);
             std::cout << std::boolalpha << result << std::endl;
         }
 

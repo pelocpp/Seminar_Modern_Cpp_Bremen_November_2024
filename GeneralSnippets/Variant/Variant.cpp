@@ -2,6 +2,10 @@
 // Variant.cpp // std::variant
 // =====================================================================================
 
+module;
+
+#include <variant>
+
 module modern_cpp:variant;
 
 namespace VariantDemo {
@@ -22,6 +26,9 @@ namespace VariantDemo {
 
         {
             size_t index{ var.index() };
+
+            // int m = var.index();
+
             int n{ std::get<0>(var) };    // std::get using index
             std::println("{} - Value: {}", index, n);
         }
@@ -87,13 +94,56 @@ namespace VariantDemo {
 
     // -------------------------------------------------------------------
 
+    // primary template
+    template <class T>
+    struct my_remove_reference {
+        using my_type = T;
+    };
+
+    // template specialization
+    template <class T>
+    struct  my_remove_reference<T&> {
+        using my_type = T;
+    };
+
+    // template specialization
+    //template <>
+    //struct  my_remove_reference <int> {
+    //    using my_type = int;
+    //};
+
+
+
+
+
     static void test_03() {
 
         std::variant<int, double, std::string> var{ 123 };
 
         // using a generic visitor (matching all types in the variant)
-        auto visitor = [](const auto& elem) {
-            std::println("{}", elem);
+        auto visitor = [] (const auto& elem) {
+
+            using ElemType = decltype (elem);
+            using ElemTypeWithoutRef = my_remove_reference <ElemType>::my_type;
+            using ElemTypeWithoutRefConst = std::remove_const <ElemTypeWithoutRef>::type;
+
+            if constexpr ( std::is_same<ElemTypeWithoutRefConst, int>::value == true)
+            {
+                std::println("int: {}", elem);
+            }
+            else if constexpr (std::is_same<ElemTypeWithoutRefConst, double>::value == true)
+            {
+                std::println("double: {}", elem);
+            }
+            else if constexpr (std::is_same<ElemTypeWithoutRefConst, std::string>::value == true)
+            {
+                std::println("std::string: {}", elem);
+                std::println("Length of this string: {}", elem.size());
+            }
+            else
+            {
+                std::println("Unbekannt: {}", elem);
+            }
         };
 
         std::visit(visitor, var);

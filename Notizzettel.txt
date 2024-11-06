@@ -543,3 +543,72 @@ for _ each
 
 Minus von einem for _ each: Der Index geht verloren.
 
+// ==================================
+
+Short Circuit Evaluation
+            
+            return cond && andAll(conds...);
+
+for...
+
+// =====================================
+
+int n;
+
+//
+
+hat n einen gültigen Wert ----------
+
+if (n == 0)
+
+if (n == -1)
+
+if (n == -243823423)
+
+int n;
+bool isValid;
+
+std::optional
+
+C#:
+
+int? n;
+
+
+// ==============================================
+
+Wozu brauche ich einen std::variant  ???
+
+
+Kann Daten unterschiedlichen Typs aufnehmen ...
+zu einem Zeitpunkt aber nur EINEN Wert.
+
+Excel  // Sheets:   ==> Zelle // Cell
+
+Werte, Zeichenketten, Datum, Currency, Gleitpunkt, ...
+
+std::variant: Vorab bekannt sein.
+
+std::any  // Type Erasure
+
+Game - Programming:   Board ===> Figuren ===> std::variant
+
+// ================================================
+
+C# Reflection API
+
+C++ 26: Reflection
+
+Type Traits: "C++ Reflection für Arme".
+
+Diagnose Tool
+
+// ================================================
+
+Do: 16 Uhr.
+
+// ================================================
+
+Folding   // Abrollen:   Optimierungstechnik
+
+Denselben Operator wiederholt anwenden zu können:

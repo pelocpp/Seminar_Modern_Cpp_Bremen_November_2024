@@ -4,7 +4,7 @@
 
 module modern_cpp:optional;
 
-namespace OptionalExamples {
+namespace OptionalExamples { 
 
     /*
     * Introduction
@@ -21,7 +21,7 @@ namespace OptionalExamples {
 
         someValue = std::nullopt;
 
-        if (someValue) {
+        if (someValue) {  // std::optional ==> bool
 
             std::cout << "Value:" << someValue.value() << std::endl;
         }
@@ -48,7 +48,7 @@ namespace OptionalExamples {
     {
 
     private:
-        std::optional<std::string> m_phone;
+        std::optional<std::string> m_phone;  // ""  0
 
     public:
         Contact() : m_phone{ std::nullopt } {}

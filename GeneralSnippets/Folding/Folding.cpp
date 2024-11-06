@@ -8,6 +8,83 @@ module;
 
 module modern_cpp:folding;
 
+
+namespace Folding_Seminar {
+
+    int addierer_legacy(auto ... arguments) {
+
+        int result{};
+
+        for (auto elem : std::initializer_list<int>{ arguments ... }) {
+
+            result += elem;
+        }
+
+        return result;
+    }
+
+    int addierer (auto ... arguments) {
+
+        int result{};
+
+        // folding expression: a1 + a2 + a3 + a4 + a5 + .....
+
+        result = ( ...  + arguments );
+
+        return result;
+    }
+
+    int subtrahierer (auto ... arguments) {
+
+        int result{};
+
+        // folding expression: a1 - a2 - a3 - a4 - a5 - .....
+
+        result = (arguments -  ...);
+
+        return result;
+    }
+
+    void printer (auto first, auto ... arguments) {
+
+        // alles auf der Konsole ausgeben
+
+        // Binary Folding Ausdruck
+        // (init op ... op pack)	
+        // (std::cout << ... << arguments);
+
+        // Unary Folding Ausdruck
+
+        std::cout << first;
+
+        (... , (std::cout << " = " << arguments ) );
+    }
+
+    void fooooo(int wert)
+    {
+    }
+
+    void test_seminar() {
+
+        //int x = 1;
+        //int y = 2;
+        //int z = 3;
+        //for (int i = 0, k = 0; ; i++, k++);
+        //fooooo((y = 1, x = 2));   // Sequenz-Operator
+
+
+        auto result = addierer(1, 2, 3,4, 5, 6, 7, 8, 9);
+
+        // (1 - 2) - 3 = -4
+        // 1 - (2 - 3) = +2
+
+        result = subtrahierer(1, 2, 3);
+
+        printer(123, "ABC", 123.345, '?',  std::string{"XYZ"});
+    }
+}
+
+
 namespace Folding {
 
     /* folding examples: introduction
@@ -176,6 +253,10 @@ namespace Folding {
 
 void main_folding()
 {
+    using namespace Folding_Seminar;
+    test_seminar();
+    return;
+
     using namespace Folding;
     test_01();
     test_02();
