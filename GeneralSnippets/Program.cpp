@@ -47,14 +47,14 @@ int main()
         //main_erase_remove_idiom();
         //main_expression_templates();
         //main_generate();
-        //main_generic_functions();
+       //main_generic_functions();
         //main_exception_safety();
         //main_explicit_keyword();
         //main_folding();
         //main_functional_programming_ranges();
         //main_functional_programming();
         //main_functional_programming_alternate();
-        //main_initializer_list();
+    //    main_initializer_list();
         //main_input_output_streams();  
         //main_invoke();
         //main_lambdas();
@@ -66,9 +66,9 @@ int main()
         //main_metaprogramming_02(); 
         //main_modularized_standard_library(); 
         //main_modules();
-      //  main_move_semantics();
+     //   main_move_semantics();
         //main_optional();
-        //main_perfect_forwarding();
+       main_perfect_forwarding();
         //main_placement_new();
         //main_println();
         //main_raii();
@@ -99,7 +99,7 @@ int main()
         //main_type_erasure();
         //main_type_traits();
        // main_unique_ptr();
-        //main_variadic_templates_introduction();
+      //  main_variadic_templates_introduction();
         //main_variadic_templates_working_on_every_argument();
         //main_variadic_templates_sum_of_sums();
         //main_variadic_templates_mixins();
@@ -108,7 +108,7 @@ int main()
         //main_virtual_override_final();
      //   main_weak_pointer();
 
-        main_exercises();
+        //main_exercises();
     }
     catch (const std::exception& ex) {
         std::cout << "Exception: " << ex.what() << std::endl;

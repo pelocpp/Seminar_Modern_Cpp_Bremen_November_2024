@@ -441,3 +441,105 @@ b) Viele Verwender eines "Zentralen Objekte // std::shared_ptr"
    sollten NICHT zum Besitzer (Owner) werden.
 
    Wenn doch: Referenz Count geht nach oben.
+
+// Ein Vergleich
+
+    int tmp = n;
+00007FF62B7D5A5F  mov         eax,dword ptr [n]  
+00007FF62B7D5A65  mov         dword ptr [tmp],eax  
+
+    int tmp = n;
+00007FF62B8DCB90  mov         rax,qword ptr [n]  
+00007FF62B8DCB97  mov         eax,dword ptr [rax]  
+00007FF62B8DCB99  mov         dword ptr [tmp],eax  
+
+// 
+=======================
+
+std::initializer_list
+
+ist KEIN Container im Sinne der STL:
+
+Light-Weight Container
+
+begin(), end(), size().
+
+std::initializer_list und std::vector sind befreundet :)
+
+Go - for - std::initializer_list
+
+SSO...  Small String Optimization  ==> "Kleine" Zeichenkette liegen 
+
+                                       im std::string Objekt selbst.
+
+
+
+std::vector<int> vec1 (10);  // Vektor: Size 10, alle Werte mit 0 vorbelegt
+
+std::vector<int> vec{ 10 };  // Vektor: Size 1, vorbelegt mit 10
+
+// =========================================================
+
+Variadische Templates:
+======================
+
+Why ???????????????????????????????????????????????
+
+Es gibt viele STL // Bibliotheks-Funktionen, 
+
+die eine bel. Anzahl von Werten // bel. Typs transportieren:
+
+std::make_shared
+std::make_unique
+
+... emplace
+
+std::thread:  ===> Übergabe der Parameter an die Thread-Prozedur
+
+
+
+// primary template
+
+template<typename T, typename ... TArgs>
+void printer(T n, TArgs... args)
+{
+  printer(args... );
+}
+
+// template specialization
+
+template<>
+void printer <int, int, int, int>  (T n, TArgs... args)
+{
+  printer(args... );
+}
+
+TArgs ... args
+
+NOmenklatur: args ist ein "Parameter Pack"
+
+Operationen:
+
+Vorangestelltes // nachgestelltes ...   // einpacken, auspacken
+
+Beschreibung: Was ist auspacken ??? Es wird bzgl. der Werte
+              eine KOMMA getrennte Liste erzeugt.
+
+sizeof... (args)
+
+// =================================================
+
+"Perfect Forwarding"
+
+Referenzen
+
+// =================================================
+
+Go - for - "emplace"
+
+// =================================================
+
+for _ each   
+
+Minus von einem for _ each: Der Index geht verloren.
+

@@ -9,13 +9,20 @@ namespace GenericFunctions {
 
     // -------------------------------------------------------------------
 
+    // C++ 20 
+
+    template <typename T>
+    static auto function2(T x, int y) {
+        std::cout << "x=" << x << ", y=" << y << std::endl;
+    };
+
     static auto function(auto x, int y) {
         std::cout << "x=" << x << ", y=" << y << std::endl;
     };
 
     static void test_01()
     {
-        function(1, 100);
+        function(1, 100);    // "Code Bloat" versus "Performanz"
         function(2.5, 101);
         function(std::string{ "ABC" }, 102);
         function("XYZ", 103);
@@ -67,7 +74,9 @@ namespace GenericFunctions {
     // -------------------------------------------------------------------
 
     // define a generic function (top-level (!))
-    static auto isGreaterThanFifty(const auto& n) { return n > 50; };
+    static auto isGreaterThanFifty(const auto& n) {
+        return n > 50;   // bool
+    };
 
     static void test_04()
     {
@@ -161,7 +170,9 @@ namespace GenericLambdas {
     static void test_04()
     {
         // define a generic lambda
-        auto isGreaterThanFifty = [](const auto& n) { return n > 50; };
+        auto isGreaterThanFifty = [](const auto& n) {
+            return n > 50;
+        };
 
         std::vector<int> intValues{ 44, 65, 22, 77, 2 };
 
@@ -442,8 +453,24 @@ static void test_generic_lambdas()
     test_16();
 }
 
-void main_generic_functions()
+static bool isGreaterThanFourty1 (int n) {
+
+    int tmp = n;
+    return tmp > 40;
+};
+
+static bool isGreaterThanFourty2 (const int& n) {
+
+    int tmp = n;
+    return tmp > 40;
+};
+
+void main_generic_functions() 
 {
+    int x = 123;
+    isGreaterThanFourty1(x);
+    isGreaterThanFourty2(x);
+
     test_generic_functions();
     test_generic_lambdas();
 }

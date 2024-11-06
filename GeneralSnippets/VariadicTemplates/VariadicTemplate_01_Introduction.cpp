@@ -4,6 +4,188 @@
 
 module modern_cpp:variadic_templates;
 
+namespace VariadicTemplatesIntro_Seminar {
+
+    // C++ 11 
+    // ======
+
+    //template <typename T>
+    //void printer(T n) {
+    //    std::println("{}", n);
+    //}
+
+    //template <typename T, typename ... TArgs>    // einpacken
+    //void printer(T n, TArgs ... args) {   // einpacken
+    //    std::println("{}", n);
+    //    printer(args...);   // auspacken
+    //}
+
+    // C++ 17 
+    // ======
+
+    //template <typename T, typename ... U>    // einpacken
+    //void printer(T n, U ... m) {   // einpacken
+    //    std::println("{}", n);
+
+    //    if constexpr ( sizeof... (m) > 0)
+    //    {
+    //        printer(m...);   // auspacken
+    //    }
+    //}
+
+    // C++ 20
+    // ======
+
+    void printer(auto n) {
+        std::println("{}", n);
+    }
+
+    void printer(auto n, auto ... args) {   // einpacken
+        std::println("{}", n);
+        printer(args...);   // auspacken
+    }
+
+    void test_seminar_00()
+    {
+        // type deduction
+        printer (1, 2, 3, 4);
+    }
+
+    // ===================================================
+
+    class Unknown {
+    private:
+        int m_var1;
+        int m_var2;
+        int m_var3;
+
+    public:
+        Unknown() : m_var1{ -1 }, m_var2{ -1 }, m_var3{ -1 } {
+            std::cout << "c'tor()" << std::endl;
+        }
+
+
+        Unknown(double n, double m) {
+            std::cout << "c'tor(double, double)" << std::endl;
+        }
+
+        Unknown(int n) : m_var1{ n }, m_var2{ -1 }, m_var3{ -1 } {
+            std::cout << "c'tor(int)" << std::endl;
+        }
+
+        Unknown(int n, int m) : m_var1{ n }, m_var2{ m }, m_var3{ -1 } {
+            std::cout << "c'tor(int, int)" << std::endl;
+        }
+
+        Unknown(int n, int m, int k) : m_var1{ n }, m_var2{ m }, m_var3{ k } {
+            std::cout << "c'tor(int, int, int)" << std::endl;
+        }
+
+        friend std::ostream& operator<< (std::ostream&, const Unknown&);
+    };
+
+    std::ostream& operator<< (std::ostream& os, const Unknown& obj) {
+        os
+            << "var1: " << obj.m_var1
+            << ", var2: " << obj.m_var2
+            << ", var3: " << obj.m_var3 << std::endl;
+
+        return os;
+    }
+
+    // simple version: Works, copy can occur
+    template <typename T, typename ... TArgs>
+    auto my_make_unique (TArgs ... args) 
+    {
+        std::unique_ptr<T> ptr{ new T { args ... } };
+        return ptr;
+    }
+
+    // perfect version: "Kochrezept"
+    // a) use Universal Reference:  T&&
+    // b) use std::forward (ähnlich zu std::move)
+    template <typename T, typename ... TArgs>
+    auto my_make_unique_perfect (TArgs&& ... args)
+    {
+        std::unique_ptr<T> ptr{ new T { 
+            std::forward<TArgs> (args) ... } 
+        };
+        return ptr;
+    }
+
+    void test_seminar_03()
+    {
+        // Beispiel:
+
+        std::unique_ptr<Unknown> ptr =
+            my_make_unique_perfect<Unknown>(1, 2, 3);
+
+        //std::unique_ptr<Unknown> ptr = 
+        //    std::make_unique<Unknown>(1, 2, 3);
+    }
+
+    // ==================================================
+
+
+    auto addierer (auto ... args)
+    {
+        int result{};
+
+        auto list = { args ... };
+
+        std::for_each (
+            list.begin(), 
+            list.end(),
+            [&](auto elem) { result += elem; }
+        );
+
+        return result;
+    }
+
+
+    auto addierer_very_modern (auto ... args)
+    {
+        int result{};
+
+        for ( auto elem : { args ... }) {
+            result += elem;
+        }
+
+        return result;
+    }
+
+
+    auto addierer_under_the_hood (auto ... args)
+    {
+        int result{};
+
+        //for (auto elem : { args ... }) {
+        //    result += elem;
+        //}
+
+        auto list = { args ... };
+
+        // for_each under the hood:
+        auto anfang = list.begin();
+        auto ende = list.end();
+
+        while (anfang != ende) {
+            result += *anfang;
+            anfang++;
+        }
+
+        return result;
+    }
+
+    void test_seminar()
+    {
+        // Beispiel:
+
+        auto result = addierer_under_the_hood(1, 2, 3, 4, 5);
+    }
+
+}
+
 namespace VariadicTemplatesIntro_01 {
 
     // ====================================================================
@@ -281,6 +463,10 @@ namespace VariadicTemplatesIntro_05 {
 
 void main_variadic_templates_introduction()
 {
+    using namespace VariadicTemplatesIntro_Seminar;
+    test_seminar();
+    return;
+
     using namespace VariadicTemplatesIntro_01;
     test_printer_01();
 

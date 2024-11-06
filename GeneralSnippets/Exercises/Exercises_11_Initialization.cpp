@@ -74,7 +74,7 @@ namespace Exercises_Initialization {
         };
 
         // Note: Debug vs Release Mode
-        constexpr int MaxIteration = 10'000;
+        constexpr int MaxIteration = 1000000;
 
         static void testExercise_02() {
             {
@@ -117,7 +117,7 @@ namespace Exercises_Initialization {
 void test_exercises_initialization()
 {
     using namespace Exercises_Initialization;
-    Exercise_01::testExercise_01();
+ //   Exercise_01::testExercise_01();
     Exercise_02::testExercise_02();
 }
 
