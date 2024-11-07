@@ -16,6 +16,10 @@ namespace Exercises_VariadicTemplates {
             return cond;
         }
 
+        //bool andAll(bool cond, bool ... conds) {
+        //    return true;  // kurz
+        //}
+
         template<typename T, typename ... TRest>
         bool andAll(T cond, TRest ... conds) {
 

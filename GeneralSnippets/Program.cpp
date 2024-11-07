@@ -50,7 +50,7 @@ int main()
        //main_generic_functions();
         //main_exception_safety();
         //main_explicit_keyword();
-        main_folding();
+      //  main_folding();
         //main_functional_programming_ranges();
         //main_functional_programming();
         //main_functional_programming_alternate();

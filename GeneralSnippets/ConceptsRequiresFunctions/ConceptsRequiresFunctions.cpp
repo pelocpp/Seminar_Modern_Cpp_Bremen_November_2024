@@ -14,12 +14,17 @@ concept NumericalEx = std::is_integral<T>::value || std::is_floating_point<T>::v
 
 namespace Requires_Clause {
 
-    template <typename T>
-        requires Numerical<T>
-    auto add(T a, T b)
+    auto addNeu(NumericalEx auto a, NumericalEx auto b)
     {
-        return a + b;
+        return a + b;  // int, float, std::string, Matrix
     }
+
+    //template <typename T>
+    //    requires NumericalEx<T>
+    //auto add(T a, T b)
+    //{
+    //    return a + b;  // int, float, std::string, Matrix
+    //}
 
     // "inlining" constraints on template parameter types
     template <typename T>
@@ -31,10 +36,10 @@ namespace Requires_Clause {
 
     static void test_concepts_requires_01()
     {
-        auto sum1{ add(123.456f, 654.321f) };
+        auto sum1{ addNeu(123.456f, 654.321f) };
         std::cout << sum1 << std::endl;
 
-        auto sum2{ add(123.456, 654.321) };
+        auto sum2{ addNeu(123.456, 654.321) };
         std::cout << sum2 << std::endl;
 
         // 'add': no matching overloaded function found		
@@ -48,7 +53,7 @@ namespace Requires_Clause {
         //    the concept 'Numerical<std::string>' evaluated to false
         //    the concept 'std::floating_point<std::string>' evaluated to false
         //    the concept 'std::integral<std::string>' evaluated to false
-        // auto sum4 = add(std::string { "ABC" }, std::string { "DEF" });
+     //  auto sum4 = addNeu(std::string { "ABC" }, std::string { "DEF" });
     }
 
     // ---------------------------------------------------------------------------------
@@ -199,7 +204,8 @@ namespace UserDefined_Concept {
 
     // using <type_traits>
     template <typename T>
-    concept GreatIntegral = std::is_integral<T>::value && isGreaterThanWord<T>;
+    concept GreatIntegral = std::is_integral<T>::value 
+        && isGreaterThanWord<T>;
 
     template<GreatIntegral T>
     T incrementByOne(const T& arg) {
@@ -218,7 +224,7 @@ namespace UserDefined_Concept {
 
         // short s{ 1 };
         // the associated constraints are not satisfied:
-        // s = incrementByOne(s);
+         //s = incrementByOne(s);
 
         n = incrementByTwo(n);
 

@@ -14,7 +14,7 @@ void main_exercises()
     //test_exercises_algorithms();
     //test_exercises_constexpr();
     test_exercises_variadic_templates();
-    //test_exercises_folding();
+    test_exercises_folding();
     //test_exercises_utility_classes();
     //test_exercices_metaprogramming();
     //test_exercices_expression_templates();

@@ -6,6 +6,8 @@ Modern C++
 
 Peter Loos
 
+peter.loos@gmx.de
+
 // =======================================
 
 Was sind meine Erwartungen
@@ -612,3 +614,66 @@ Do: 16 Uhr.
 Folding   // Abrollen:   Optimierungstechnik
 
 Denselben Operator wiederholt anwenden zu können:
+
+// ================================================
+
+
+Folding
+
+andAll ()    true && true && false ...............
+
+sameType (1, 2, 3, 4, 123.56, '2')
+
+sameType (1, 2, 3, 4, 5)
+
+sameType (TArgs ... args)
+
+   auto list = std::initializer_list<>{ args ... };
+
+           constexpr bool sameType(T arg, TArgs... args)
+        {
+            // since C++17: folding expression !
+            return (std::is_same_v<T, TArgs> && ...);
+
+sameType (1, double, '?', 123.0f)
+
+std::is_same_v<int, double> && std::is_same_v<int, char> &&  std::is_same_v<int, float>
+
+// ===================================================
+
+        template<typename T>
+        bool andAll(T cond) {
+            return cond;
+        }
+
+addierer für int ==> nur einen konkreten Datentyp
+
+andAll für bool  ==> nur einen konkreten Datentyp
+
+        NEIN
+
+        bool andAll(bool cond, bool ... conds) {
+            return true;  // kurz
+        }
+
+a)
+        template ......
+        REQUIIREMENT: Basistyp T soll nur bool sein. 
+        bool andAll(T cond, TArgs ... conds) {
+            return true;  // kurz
+        }
+
+b) 
+        bool andAll(auto cond, auto ... conds) {
+            return true;  // kurz
+        }
+
+C++ 20:  Concepts, Requirements
+
+"Was kann man für T alle nehmen":
+
+Man kann alles nehmen, so dass es übersetzungsfähig ist:
+
+          == reagierendes Verhalten
+
+          == proaktives Verhalten

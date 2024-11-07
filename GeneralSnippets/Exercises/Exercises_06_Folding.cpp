@@ -11,9 +11,13 @@ namespace Exercises_Folding {
         // =============================================================
         // Logical And - with folding expression
 
+        // true && true && false && true && false
+
         template<typename ... TArgs>
         bool andAll(TArgs ... args) {
+
             return (... && args);  // unary left fold
+        
         }
 
         static void testExercise_01a() {
@@ -60,14 +64,14 @@ namespace Exercises_Folding {
         constexpr bool sameType(T arg, TArgs... args)
         {
             // since C++17: folding expression !
-            return (std::is_same_v<T, TArgs> && ...);
+            return (std::is_same<T, TArgs>::value && ...);
             // or
             // return (std::is_same_v<decltype(arg), decltype(args)> && ...);
         }
 
         static void testExercise_02() {
 
-            constexpr bool result1 = sameType(1, 2, 3, 4, '?', 6, 7, 8, 9);
+            constexpr bool result1 = sameType(1);
             std::cout << std::boolalpha << result1 << std::endl;
 
             constexpr bool result2 = sameType(43, false, "hello");
