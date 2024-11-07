@@ -76,7 +76,14 @@ namespace StdArray {
     // passing std::array as parameter
 
     static void print(const std::array<int, 5>& array) {
+
+        const int* anfang = array.data();
+
         std::println("Length: {}", array.size());
+    }
+
+    static void print2(int * anfang) {
+       // std::println("Length: {}", array.size());
     }
 
     template<typename T, int Length>
@@ -319,6 +326,7 @@ namespace StdArray {
     // std::span
 
     // demonstrating printArray with pointer parameter
+    // ALTE WELT !!!!
     static void printArray(const int* array, size_t size) {
 
         std::println("Number of elements: {}", size);
@@ -359,23 +367,23 @@ namespace StdArray {
 
     static void test_31() {
 
-        int carr[]{ 1, 2, 3, 4, 5 };
-        printSpan(carr);
-
-        std::array arr{ 6, 7, 8, 9, 10 };
-        printSpan(arr);
-
-        std::vector<int> vec{ 1, 3, 5, 7, 9 };
-        printSpan(vec);
-
         //int carr[]{ 1, 2, 3, 4, 5 };
-        //printSpan(std::span{ carr });
+        //printSpan(carr);
 
         //std::array arr{ 6, 7, 8, 9, 10 };
-        //printSpan(std::span{ arr });
+        //printSpan(arr);
 
-        //std::vector vec{ 1, 3, 5, 7, 9 };
-        //printSpan(std::span{ vec });
+        //std::vector<int> vec{ 1, 3, 5, 7, 9 };
+        //printSpan(vec);
+
+        int carr[]{ 1, 2, 3, 4, 5 };
+        printSpan(std::span{ carr });
+
+        std::array arr{ 6, 7, 8, 9, 10 };
+        printSpan(std::span{ arr });   // .data,  .size
+
+        std::vector vec{ 1, 3, 5, 7, 9 };
+        printSpan(std::span{ vec });   // .data,  .size
     }
 
     // --------------------------------------------------------------------

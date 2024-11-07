@@ -84,7 +84,7 @@ int main()
         //main_sso();
         //main_static_assert();
         //main_string_view();
-        //main_structured_binding();
+        main_structured_binding();
         //main_class_templates_basics_01();
         //main_class_templates_basics_02();
         //main_function_templates_basics();
@@ -108,7 +108,7 @@ int main()
         //main_virtual_override_final();
      //   main_weak_pointer();
 
-        main_exercises();
+     //   main_exercises();
     }
     catch (const std::exception& ex) {
         std::cout << "Exception: " << ex.what() << std::endl;

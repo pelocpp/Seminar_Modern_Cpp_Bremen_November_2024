@@ -677,3 +677,178 @@ Man kann alles nehmen, so dass es übersetzungsfähig ist:
           == reagierendes Verhalten
 
           == proaktives Verhalten
+
+=========================================================
+
+Windows:
+
+Beendet sich der Primärthread einer Anwendung,
+werden alle Sekundärthreads ebenfalls beendet.
+
+
+Kann ich join verwenden, um auf berechnete Ergebnisse zu warten ???
+
+NEIN: Geht besser und eleganter:   std::future.
+
+std::thread:   join oder detach on board.
+
+C++ 20:  std::jthread  : Da geht es ohne join oder detach
+
+Dieses Klasse kann noch mehr 
+
+==========================================
+
+CreateThread
+
+fork (Unix)
+
+Eigenschaft: Jeder dieser Funktionen kann den Thead NUR EINMAL ausführen.
+
+Web - Server:   CreateThread  NO:  Resources.
+
+Thread Pool:  Ein Thread eines Thead Pools kann MEHRFACH verwendet werden.
+
+
+FRAGE: Finden wir in C++ // Threading APIS den Zugang
+zu einem Thread Pool vor ??????????????
+
+// =====================================================
+
+RAII:  ÄHNLICH zu std::shared oder std::unique_ptr:
+
+===> Resource MUTEX nicht DIREKT verwenden.
+
+Wir verwenden an Stelle des MUTEXES ein HÜLLENOBJEKT:
+
+Konstruktor:  .lock
+
+Destruktor:   .unlock
+
+// =====================================================
+
+di();
+
+ei();
+
+a ++;
+
+std::condition_queue
+
+Multithreading: 
+
+Konkurrenz   // quasi-gleichzeitige Zugriff
+
+========> Scheduler  // Dispatcher 
+
+a = 123;   // NICHT Atomar
+
+mov    rax, adr(a)
+mov    eax, 123
+// =============== <<<   FOLGE-ADRESSE 
+mov    [rax], eax
+
+  
+Betriebssystem - Programmierung
+
+System - Programmierung
+
+=========================================
+
+Konkurrenz   // quasi-gleichzeitige Zugriff
+
+Kooperation  // wait  // notify
+
+===========================================
+
+Das Konsumenten-Produzenten Problem in C++
+
+
+===========================================
+
+std::jthread
+
+Mixed Pickles C++
+
+Last Example:  Nachrichtenwarteschlange (All In)
+
+============================================
+
+std::jthread   joinable thread 
+
+Nicolai Jossutis  J
+
+============================================
+std::future
+
+std::promise
+
+============================================
+
+std::string_view:  ==> Eher nicht am Heap.
+
+std::string        ==> HEAP 
+
+const char* chars = "asdfasfasdfasdf";
+
+KONSTANTE ZEICHENKETTE
+
+NICHT Heap 
+NICHT Stack
+
+Code-Segment
+BSS
+Text-Segment
+
+
+Beobachtung: Viele, konstante Zeichenketten.
+
+Warum sollen die auf den HEAP. Das kostet HEAP-Speicher.
+
+.... 400
+.... 280
+
+std::string_view:   Ist ein Non-Owning Container.
+
+const char*:       NUR DIE ADRESSE DES ANFANGS
+
+std::string_view:  ADRESSE DES ANFANGS + LÄNGE
+
+
+2 Variablen:
+
+Anfangsadresse: const char*
+Size:           Länge
+
+
+Effizienz   // Performanz:
+
+std::vector vs. std::initializer_list // Heap vs. Stack
+
+std::string vs std::string_view:   // HEAP vs. globales Datensegment
+
+std::array vs std::span
+
+===========================================
+
+Structured Binding
+
+
+std::array<>
+
+oder
+
+C-Style Array
+
+std::array<> vs. std::vector<>
+
+Array: FIXED - SIZE
+
+Go for std::array: 
+
+2 Optionen des Zugriffs:
+
+a[5] = 123;
+
+a.at (5) = 123;  // Out_of_range Exception
+
+std::span 
